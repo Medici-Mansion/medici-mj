@@ -6,10 +6,21 @@
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
-    "elysia": "latest"
+    "@elysiajs/stream": "^0.7.2",
+    "@huggingface/inference": "^2.5.0",
+    "async": "^3.2.4",
+    "elysia": "latest",
+    "isomorphic-ws": "^5.0.0",
+    "semiver": "^1.1.0",
+    "snowyflake": "^2.0.0",
+    "tslib": "^2.5.0",
+    "ws": "^8.13.0"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "@types/async": "^3.2.20",
+    "@types/node": "^18.16.0",
+    "@types/ws": "^8.5.4"
   },
   "module": "src/index.js"
 }
