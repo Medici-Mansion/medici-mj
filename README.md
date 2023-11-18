@@ -16,3 +16,6 @@ bun run dev
 ```
 
 Open http://localhost:3000/ with your browser to see the result.
+```
+npx github-label-sync --access-token <TOKEN> --labels ./label.json <REPOSITORY_NAME>
+```
