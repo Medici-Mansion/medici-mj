@@ -6,6 +6,7 @@
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
+    "@elysiajs/cors": "^0.7.2",
     "@elysiajs/stream": "^0.7.2",
     "@huggingface/inference": "^2.5.0",
     "async": "^3.2.4",
