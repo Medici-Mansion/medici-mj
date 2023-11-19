@@ -18,12 +18,12 @@ export * from "./face.swap";
  * npx tsx example/imagine-ws.ts
  * ```
  */
-export async function main(stream: Stream<any>, prompt: string | null) {
+export async function main(stream: Stream<any>, prompt: string) {
   const client = new Midjourney({
     ServerId: <string>process.env.SERVER_ID,
     ChannelId: <string>process.env.CHANNEL_ID,
     SalaiToken: <string>process.env.SALAI_TOKEN,
-    HuggingFaceToken: <string>process.env.HUGGINGFACE_TOKEN,
+    // HuggingFaceToken: <string>process.env.HUGGINGFACE_TOKEN,
     Debug: true,
     Ws: true, // required  `Only you can see this`
   });
@@ -35,7 +35,7 @@ export async function main(stream: Stream<any>, prompt: string | null) {
   await client.Connect(); // required
   const image = await client.Imagine(
     // "Describe a live-action battle sequence featuring Iron Man and another Marvel hero of your choice. --turbo",
-    `${prompt ?? "realize cutty cat like github icon"} --turbo`,
+    `${prompt} --turbo`,
     getProgress
   );
   client.Close();
@@ -43,7 +43,6 @@ export async function main(stream: Stream<any>, prompt: string | null) {
     stream.send(image);
   }
   stream.close();
-
   // if (!Imagine) {
   //   return;
   // }
@@ -92,5 +91,3 @@ export async function main(stream: Stream<any>, prompt: string | null) {
 //     console.error(err);
 //     process.exit(1);
 //   });
-
-console.log(process.env.SALAI_TOKEN, "<<process.env.HUGGINGFACE_TOKEN");
