@@ -5,6 +5,7 @@ import { cors } from "@elysiajs/cors";
 
 import { main } from "mj";
 import { getPrompt } from "gen-prompt";
+import { helmet } from "elysia-helmet";
 
 const PORT = process.env.PORT || 3000;
 const app = new Elysia()
@@ -55,6 +56,7 @@ const app = new Elysia()
     }
   )
   .use(cors())
+  .use(helmet())
   .listen(PORT);
 
 console.log(
