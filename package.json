@@ -11,6 +11,7 @@
     "@huggingface/inference": "^2.5.0",
     "async": "^3.2.4",
     "elysia": "latest",
+    "elysia-helmet": "^1.0.1",
     "isomorphic-ws": "^5.0.0",
     "openai": "^4.19.0",
     "semiver": "^1.1.0",
