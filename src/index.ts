@@ -1,21 +1,49 @@
-import { Elysia } from "elysia";
+import { Elysia, t } from "elysia";
 
 import { Stream } from "@elysiajs/stream";
 import { main } from "mj";
+import { getPrompt } from "gen-prompt";
+
 const PORT = process.env.PORT || 3000;
 const app = new Elysia()
-  .get("/", (context) => {
+  .guard({
+    body: t.Object({
+      sentence: t.String(),
+    }),
+    headers: t.Object({
+      auth: t.String({}),
+    }),
+  })
+  .get("/image", (context) => {
     console.log(context.path, context.request.url);
     try {
       const { prompt } = context.query;
-      if (context?.headers?.auth !== process.env.TOKEN || !prompt) {
+      if (context.headers.auth !== process.env.TOKEN || !prompt) {
         return;
       }
       return new Stream(async (stream) => main(stream, prompt));
     } catch (error) {
       context.set.status = 400;
       return {
-        error: "Unkown Exception",
+        error: "Unknown Exception",
+      };
+    }
+  })
+  .post("/prompt", async (context) => {
+    try {
+      const body = context.body;
+      if (context.headers.auth !== process.env.TOKEN) {
+        return;
+      }
+      if (!body?.sentence) {
+        return;
+      }
+      const data = await getPrompt(body.sentence);
+      return { ok: true, data };
+    } catch (error) {
+      context.set.status = 400;
+      return {
+        error: "Unknown Exception",
       };
     }
   })
