@@ -7,9 +7,6 @@ import { getPrompt } from "gen-prompt";
 const PORT = process.env.PORT || 3000;
 const app = new Elysia()
   .guard({
-    body: t.Object({
-      sentence: t.String(),
-    }),
     headers: t.Object({
       auth: t.String({}),
     }),
@@ -29,24 +26,32 @@ const app = new Elysia()
       };
     }
   })
-  .post("/prompt", async (context) => {
-    try {
-      const body = context.body;
-      if (context.headers.auth !== process.env.TOKEN) {
-        return;
+  .post(
+    "/prompt",
+    async (context) => {
+      try {
+        const body = context.body;
+        if (context.headers.auth !== process.env.TOKEN) {
+          return { ok: false };
+        }
+        if (!body?.sentence) {
+          return { ok: false };
+        }
+        const data = await getPrompt(body.sentence);
+        return { ok: true, data };
+      } catch (error) {
+        context.set.status = 400;
+        return {
+          error: "Unknown Exception",
+        };
       }
-      if (!body?.sentence) {
-        return;
-      }
-      const data = await getPrompt(body.sentence);
-      return { ok: true, data };
-    } catch (error) {
-      context.set.status = 400;
-      return {
-        error: "Unknown Exception",
-      };
+    },
+    {
+      body: t.Object({
+        sentence: t.String(),
+      }),
     }
-  })
+  )
   .listen(PORT);
 
 console.log(
