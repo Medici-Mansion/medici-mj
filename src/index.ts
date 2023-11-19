@@ -1,6 +1,8 @@
 import { Elysia, t } from "elysia";
 
 import { Stream } from "@elysiajs/stream";
+import { cors } from "@elysiajs/cors";
+
 import { main } from "mj";
 import { getPrompt } from "gen-prompt";
 
@@ -52,6 +54,7 @@ const app = new Elysia()
       }),
     }
   )
+  .use(cors())
   .listen(PORT);
 
 console.log(
