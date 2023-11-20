@@ -9,8 +9,8 @@ import { helmet } from "elysia-helmet";
 
 const PORT = process.env.PORT || 3000;
 const app = new Elysia()
-  .use(cors())
   .use(helmet())
+  .use(cors())
   .guard({
     headers: t.Object({
       auth: t.String({}),
@@ -35,6 +35,7 @@ const app = new Elysia()
   .post(
     "/prompt",
     async (context) => {
+      console.log(context.path, context.request.url);
       try {
         const body = context.body;
         if (context.headers.auth !== process.env.TOKEN) {
