@@ -9,6 +9,8 @@ import { helmet } from "elysia-helmet";
 
 const PORT = process.env.PORT || 3000;
 const app = new Elysia()
+  .use(cors())
+  .use(helmet())
   .guard({
     headers: t.Object({
       auth: t.String({}),
@@ -55,8 +57,6 @@ const app = new Elysia()
       }),
     }
   )
-  .use(cors())
-  .use(helmet())
   .listen(PORT);
 
 console.log(
