@@ -27,7 +27,8 @@ const app = new Elysia()
     } catch (error) {
       context.set.status = 400;
       return {
-        error: "Unknown Exception",
+        error,
+        message: "Unknown Exception",
       };
     }
   })
@@ -47,7 +48,8 @@ const app = new Elysia()
       } catch (error) {
         context.set.status = 400;
         return {
-          error: "Unknown Exception",
+          error,
+          message: "Unknown Exception",
         };
       }
     },

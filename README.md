@@ -17,3 +17,7 @@ bun run dev
 
 Open http://localhost:3000/ with your browser to see the result.
 
+```
+docker buildx build --platform linux/amd64 -t medici-mj:1.0.6 .
+gcloud builds submit --tag  asia-northeast1-docker.pkg.dev/premium-archery-400204/medici/medici-mj:1.0.6
+```
