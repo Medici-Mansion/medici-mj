@@ -30,7 +30,7 @@ export async function main(stream: Stream<any>, prompt: string) {
   function getProgress(uri: string, progress: string) {
     console.log("Imagine.loading", uri, "progress", progress);
     console.log(uri, progress, "<<<<!=============================");
-    stream.send({ uri, progress });
+    stream.send(JSON.stringify({ uri, progress }));
   }
   await client.Connect(); // required
   const image = await client.Imagine(
@@ -40,7 +40,7 @@ export async function main(stream: Stream<any>, prompt: string) {
   );
   client.Close();
   if (image) {
-    stream.send(image);
+    stream.send(JSON.stringify(image));
   }
   stream.close();
   // if (!Imagine) {
