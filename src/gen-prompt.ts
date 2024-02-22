@@ -17,7 +17,7 @@ const makePrompt = (sentence: string) =>
   - make 5 prompts
   - Remove unexpected words or phrases from the prompt.
   - List based on line breaks
-  - The maximum number of words must be 15 words or less.
+  - The maximum number of words must be 20 words or less.
   - Make the most of the sentences inside the ""
   `;
 
