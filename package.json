@@ -4,7 +4,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
-    "start" : "NODE_ENV=production bun run src/index.ts"
+    "start": "NODE_ENV=production bun run src/index.ts"
   },
   "dependencies": {
     "@elysiajs/cors": "0.5.1",
@@ -13,6 +13,7 @@
     "async": "^3.2.4",
     "elysia": "latest",
     "elysia-helmet": "^1.0.1",
+    "freezer-midjourney-api": "^4.0.6",
     "isomorphic-ws": "^5.0.0",
     "openai": "^4.19.0",
     "semiver": "^1.1.0",
