@@ -11,6 +11,8 @@ export * from "./verify.human";
 export * from "./banned.words";
 export * from "./face.swap";
 
+let client: Midjourney;
+
 /**
  *
  * a simple example of using the imagine api with ws
@@ -19,7 +21,7 @@ export * from "./face.swap";
  * ```
  */
 export async function main(stream: Stream<any>, prompt: string) {
-  const client = new Midjourney({
+  client = new Midjourney({
     ServerId: <string>process.env.SERVER_ID,
     ChannelId: <string>process.env.CHANNEL_ID,
     SalaiToken: <string>process.env.SALAI_TOKEN,
@@ -27,22 +29,27 @@ export async function main(stream: Stream<any>, prompt: string) {
     Debug: true,
     Ws: true, // required  `Only you can see this`
   });
-  function getProgress(uri: string, progress: string) {
-    console.log("Imagine.loading", uri, "progress", progress);
-    console.log(uri, progress, "<<<<!=============================");
-    stream.send(JSON.stringify({ uri, progress }));
+  try {
+    function getProgress(uri: string, progress: string) {
+      console.log("Imagine.loading", uri, "progress", progress);
+      console.log(uri, progress, "<<<<!=============================");
+      stream.send(JSON.stringify({ uri, progress }));
+    }
+    await client?.Connect(); // required
+    const image = await client?.Imagine(
+      // "Describe a live-action battle sequence featuring Iron Man and another Marvel hero of your choice. --turbo",
+      `${prompt} --turbo`,
+      getProgress
+    );
+    if (image) {
+      stream.send(JSON.stringify(image));
+    }
+  } catch (error) {
+    console.log(`[IMAGINE ERROR]: ${error}`);
+  } finally {
+    stream.close();
+    client.Close();
   }
-  await client.Connect(); // required
-  const image = await client.Imagine(
-    // "Describe a live-action battle sequence featuring Iron Man and another Marvel hero of your choice. --turbo",
-    `${prompt} --turbo`,
-    getProgress
-  );
-  client.Close();
-  if (image) {
-    stream.send(JSON.stringify(image));
-  }
-  stream.close();
   // if (!Imagine) {
   //   return;
   // }
