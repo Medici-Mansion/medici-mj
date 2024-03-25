@@ -36,7 +36,7 @@ export const getPrompt = async (sentence: string) => {
   //   return text;
   // });
   const prompts = await openai.chat.completions.create({
-    model: "gpt-4-1106-preview",
+    model: "gpt-4-turbo-preview",
     messages: [{ role: "user", content: makePrompt(sentence) }],
   });
 
