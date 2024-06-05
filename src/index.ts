@@ -21,7 +21,7 @@ const app = new Elysia()
     try {
       const { prompt } = context.query;
       if (context.headers.auth !== process.env.TOKEN || !prompt) {
-        return;
+        return "No Auth";
       }
       return new Stream(async (stream) => main(stream, prompt));
     } catch (error) {
