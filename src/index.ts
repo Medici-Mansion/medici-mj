@@ -25,6 +25,7 @@ const app = new Elysia()
       }
       return new Stream(async (stream) => main(stream, prompt));
     } catch (error) {
+      console.log(error, " !!!!ERROR");
       context.set.status = 400;
       return {
         error,
