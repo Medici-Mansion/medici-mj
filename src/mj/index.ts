@@ -22,14 +22,16 @@ let client: Midjourney;
  */
 export async function main(stream: Stream<any>, prompt: string) {
   try {
-    client = new Midjourney({
-      ServerId: <string>process.env.SERVER_ID,
-      ChannelId: <string>process.env.CHANNEL_ID,
-      SalaiToken: <string>process.env.SALAI_TOKEN,
-      // HuggingFaceToken: <string>process.env.HUGGINGFACE_TOKEN,
-      Debug: true,
-      Ws: true, // required  `Only you can see this`
-    });
+    if (!client) {
+      client = new Midjourney({
+        ServerId: <string>process.env.SERVER_ID,
+        ChannelId: <string>process.env.CHANNEL_ID,
+        SalaiToken: <string>process.env.SALAI_TOKEN,
+        // HuggingFaceToken: <string>process.env.HUGGINGFACE_TOKEN,
+        Debug: false,
+        Ws: true, // required  `Only you can see this`
+      });
+    }
     function getProgress(uri: string, progress: string) {
       console.log("Imagine.loading", uri, "progress", progress);
       console.log(uri, progress, "<<<<!=============================");
@@ -47,6 +49,7 @@ export async function main(stream: Stream<any>, prompt: string) {
   } catch (error) {
     console.log(`[IMAGINE ERROR]: ${error}`);
   } finally {
+    console.log(`[IMAGINE FINISH]`);
     stream.close();
     client.Close();
   }
