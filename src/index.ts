@@ -19,7 +19,7 @@ const app = new Elysia()
   .post("/image", (context) => {
     console.log(context.path, context.request.url, { context });
     try {
-      const { prompt } = context.query;
+      const { prompt } = context.body;
       console.log(context.headers.auth);
       console.log(process.env.TOKEN);
       console.log(prompt);
