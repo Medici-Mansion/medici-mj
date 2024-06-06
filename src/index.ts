@@ -20,6 +20,8 @@ const app = new Elysia()
     console.log(context.path, context.request.url);
     try {
       const { prompt } = context.query;
+      console.log(context.headers.auth);
+      console.log(process.env.TOKEN);
       if (context.headers.auth !== process.env.TOKEN || !prompt) {
         return "No Auth";
       }
